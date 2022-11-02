@@ -1,0 +1,29 @@
+{%extends 'store/base.html'%}
+
+{%block title%}Search{%endblock title%}
+
+{%block content%}
+
+<div class="container">
+<h2>Search Results</h2>
+    {%if result%}
+    <div class="row">
+        {%for product in result%}
+        <div class="col-sm-4 card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{product.title}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{product.price}} </h6>
+                <p class="card-text">{{product.details}}.</p>
+                <a href="{%url 'add-to-cart' product.id %}" class="card-link">Add to Cart</a>
+                <a href="{%url 'remove-from-cart' product.id %}" class="card-link">Remove from Cart</a>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+    {%else%}
+    <p class="my-2">No Item found.Use proper keywords from title or details to get your required Item.</p>
+    {%endif%}
+    <a class="btn btn-outline-primary" href="{%url 'home'%}">Back to Home</a>
+</div>
+
+{%endblock content%}

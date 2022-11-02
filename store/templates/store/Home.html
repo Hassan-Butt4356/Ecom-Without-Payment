@@ -1,0 +1,26 @@
+{%extends 'store/base.html'%}
+{%block title%}Home-List{%endblock%}
+{%block content%}
+<div class="mx-2">
+    <form method="get" action="{% url 'search' %}">
+        <input name="query" type="text" class="input" placeholder="Search Item...">
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+<div class="container">
+    <div class="row">
+        {%for product in object_list%}
+        <div class="col-sm-4 card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{product.title}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{product.price}} </h6>
+                <p class="card-text">{{product.details}}.</p>
+                <a href="{%url 'add-to-cart' product.id %}" class="card-link">Add to Cart</a>
+                <a href="{%url 'remove-from-cart' product.id %}" class="card-link">Remove from Cart</a>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+{%endblock%}

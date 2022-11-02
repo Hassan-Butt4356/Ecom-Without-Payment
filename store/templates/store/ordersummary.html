@@ -1,0 +1,61 @@
+{%extends 'store/base.html'%}
+{%block title%}Order Summary{%endblock%}
+{%block content%}
+<div class="container">
+    <table class="table">
+        <h2 class="my-3" style="color:blue;">Order Summary</h2>
+        {%if order%}
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Item Title</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for orderitem in order.items.all %}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{orderitem.item.title}}</td>
+            <td>{{orderitem.item.price}}</td>
+            <td><a href="{%url 'remove-single-item' orderitem.item.pk%}" class="mr-2 btn btn-danger">
+                <strog>-</strog>
+            </a>{{orderitem.quantity}}<a href="{%url 'add-single-to-cart' orderitem.item.pk%}"
+                                         class="ml-2 btn btn-primary">
+                <strog>+</strog>
+            </a></td>
+            <td>{{orderitem.get_total_price}}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">your cart is empty</td>
+        </tr>
+
+        <tr>
+            <td colspan="5">
+                <a href="{%url 'home'%}" class="btn btn-primary float-right">Continue Shopping</a>
+            </td>
+        </tr>
+        {%endfor%}
+        {%if order.final_order_price%}
+        <tr>
+            <td colspan="4"><b>Order Total Price</b></td>
+            <td><b>{{order.final_order_price}}</b></td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <a href="{%url 'checkout' %}" class="btn btn-warning float-right ml-2">Proceed to Checkout Page</a>
+                <a href="{%url 'home'%}" class="btn btn-primary float-right">Continue Shopping</a>
+            </td>
+        </tr>
+        {%endif%}
+        </tbody>
+        {%else%}
+        <p>You Don't have any order available.Right Now.</p>
+        <a href="{%url 'home'%}" class="btn btn-primary float-left">Continue Shopping</a>
+        {%endif%}
+    </table>
+</div>
+{%endblock%}
